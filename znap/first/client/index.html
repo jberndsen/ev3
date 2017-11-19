@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.1/Rx.js"></script>
+    </head>
+    <body>
+        Use the arrow keys to control the robot.
+        
+        <script>
+            // instantiate a socket connection to the server
+            var socket = io();
+
+            // create a stream of keyboard input events
+            // emit those events on the socket connection
+            var input$ = Rx.Observable.merge(
+                Rx.Observable.fromEvent(document, 'keydown', event => {
+                    switch (event.keyCode) {
+                        case 32:
+                            return 'bite';
+                        case 37:
+                            return 'left';
+                        case 38:
+                            return 'up';
+                        case 39:
+                            return 'right';
+                        case 40:
+                            return 'down';
+                        default:
+                            return 'stop';
+                    }
+                }),
+                Rx.Observable.fromEvent(document, 'keyup', event => 'stop')
+            )
+            .distinctUntilChanged()
+            .subscribe(function(action) {
+                socket.emit('ev3-command', action);
+            });
+
+            // listen for messages
+            socket.on('info', function(payload) {
+                console.log(payload);
+            });
+        </script>
+    </body>
+</html>

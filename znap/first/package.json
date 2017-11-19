@@ -1,0 +1,22 @@
+{
+  "name": "first",
+  "version": "1.0.0",
+  "description": "First experiment with NodeJS on the EV3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "robot@ev3dev.local:first"
+  },
+  "author": "Jeroen Berndsen",
+  "license": "ISC",
+  "dependencies": {
+    "ev3dev-lang": "^1.0.0",
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "rx": "^4.1.0",
+    "socket.io": "^1.7.2"
+  }
+}
